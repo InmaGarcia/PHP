@@ -1,0 +1,12 @@
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tipos {
+  width: 30%;
+}
+
+.saltolinea {
+  width: 100%;
+}

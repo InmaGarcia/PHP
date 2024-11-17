@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #353535;
+  margin: 20px;
+  padding: 0;
+  color: #fff;
+}
+h1 {
+  text-align: left;
+  color: #339dd6;
+  margin-top: 20px;
+}
+ul {
+  text-align: left;
+  margin-top: 30px;
+  font-size: 1.5rem;
+}
+li {
+  margin: 30px 0;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+div {
+  background-color: #339dd6;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 2rem;
+}
+a:hover {
+  width: 100%;
+  text-decoration: underline;
+}
+
+form {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  background-color: #339dd6;
+  padding: 20px;
+  border-radius: 10px;
+  color: #353535;
+  font-weight: bold;
+}
+
+input {
+  margin: 5px 10px;
+}
