@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+}
+
+/* HEADER */
+header,
+footer {
+  background-color: bisque;
+  display: flex;
+  justify-content: space-evenly;
+}
+header p {
+  font-size: 4em;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+header img {
+  width: 150px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-items: end;
+  list-style: none;
+  font-size: 2em;
+}
+.menu li {
+  margin-left: 10%;
+}
+
+a {
+  text-decoration: none;
+  color: #68492c;
+}
+
+/* BUSCADOR */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tipos {
+  width: 30%;
+}
+
+.saltolinea {
+  width: 100%;
+  height: 10px;
+}
+
+fieldset,
+legend {
+  background-color: #68492c;
+  border: 1px solid bisque;
+  border-radius: 20px;
+  margin: 30px;
+  width: 50%;
+  font-size: 2em;
+  color: antiquewhite;
+}
+fieldset form {
+  font-size: 1.5rem;
+}
+#btn-submit {
+  padding: 10px;
+  background-color: bisque;
+  color: #68492c;
+  font-size: 1.5rem;
+  border-radius: 20px;
+}
+
+/* CATALOGO */
+
+/* LOGIN */
+.registro {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: baseline;
+}
+.contenedor {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+}
+
+.contenedor legend {
+  font-size: 1.5em;
+}
