@@ -28,7 +28,7 @@
          exit();
      }
      
-     $sql = "SELECT * FROM cervezas";
+     $sql = "SELECT * FROM productos";
      $datos = mysqli_query($conn, $sql);
      // Verificar si hay resultados
      if ($datos) {
@@ -43,7 +43,7 @@
         echo $lista;
         print ("<P> <A HREF='javascript:history.back()'>Volver</A> </P>\n");
     } else {
-        echo "No se encontraron usuarios.";
+        echo "No se encontraron cervezas.";
     }
      mysqli_close($conn);
 ?>
