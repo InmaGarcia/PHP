@@ -17,7 +17,7 @@
 </head>
 <body>
     <?php
-    include("header.html");
+    include("./componentes/header.html");
     ?>
     <main>
         <div class="container">
@@ -27,14 +27,14 @@
                     <span>Ingrese su correo y contraseña</span>
                     <div class="container-input">
                         <i class="fa-regular fa-envelope"></i>
-                        <input type="text" placeholder="Email">
+                        <input type="text" placeholder="Email" name="email">
                     </div>
                     <div class="container-input">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" name="password">
                     </div>
                     <a href="#">¿Olvidaste tu contraseña?</a>
-                    <button class="btn">Iniciar sesión</button>
+                    <button class="btn" name="btn-inicio">Iniciar sesión</button>
                 </form>
             </div>
             <div class="container-form">
@@ -43,19 +43,19 @@
                     <span>Use su email para el registro</span>
                     <div class="container-input">
                     <i class="fa-regular fa-user"></i>
-                        <input type="text" placeholder="Email">
+                        <input type="text" placeholder="Email" name="email">
                     </div>
                     <span>Introduzca su edad</span>
                     <div class="container-input">
                         <i class="fa-regular fa-calendar"></i>
-                        <input type="number" placeholder="edad">
+                        <input type="number" placeholder="edad" name="edad">
                     </div>
                     <div class="container-input">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" name="password">
                     </div>
                     
-                    <button class="btn">Registrarse</button>
+                    <button class="btn" name="btn-registro">Registrarse</button>
                 </form>
             </div>
             <div class="container-welcome">
@@ -71,10 +71,71 @@
                 </div>
             </div>
         </div>
+        <?php
+
+            include('./componentes/conexion.php');
+
+            $email = $_POST["email"];
+            $pass 	= $_POST["password"];
+            $edad 	= $_POST["edad"];
+
+            //Para iniciar sesión
+            if(isset($_POST["btn-inicio"]))
+            {
+
+            $queryusuario = mysqli_query($conn,"SELECT * FROM usuarios WHERE correo = '$email'");
+            $nr 		= mysqli_num_rows($queryusuario); 
+            $mostrar	= mysqli_fetch_array($queryusuario); 
+                
+            if (($nr == 1) && (password_verify($pass,$mostrar['password'])) )
+                { 
+                    session_id();
+                    session_start();
+                    $_SESSION['email']=$email;
+                    $_SESSION['perfil']=$mostrar['perfil'];
+                    header("Location: index.php");
+                }
+            else
+                {
+                echo "<script> alert('Usuario o contraseña incorrecto.'); </script>";
+                }
+            }
+
+            //Para registrar
+            if(isset($_POST["btn-registro"]))
+            {
+
+            $queryusuario 	= mysqli_query($conn,"SELECT * FROM usuarios WHERE correo = '$email'");
+            $nr 			= mysqli_num_rows($queryusuario); 
+
+            if ($nr == 0)
+            {
+
+                $pass_fuerte = password_hash($pass, PASSWORD_BCRYPT);
+                $queryregistrar = "INSERT INTO usuarios(correo, password, edad, perfil) values ('$email','$pass_fuerte','$edad','usuario')";
+                
+
+            if(mysqli_query($conn,$queryregistrar))
+            {
+                echo "<script> alert('Inicia Sesión con el usuario: $email');window.location= 'InicioRegistro.php' </script>";
+            }
+            else 
+            {
+                echo "Error: " .$queryregistrar."<br>".mysql_error($conn);
+            }
+
+            }else
+            {
+                    echo "<script> alert('No puedes registrar a este usuario: $email');window.location= 'index.php' </script>";
+            }
+
+            } 
+
+            ?>
     </main>
     
     <?php
-    include("footer.html");
+    include("./componentes/footer.html");
     ?>
   
 </body>

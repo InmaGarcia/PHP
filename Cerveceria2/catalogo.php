@@ -15,18 +15,10 @@
 </head>
 <body>
 <?php
-    include("header.html");
+    include("./componentes/header.html");
 ?>
 <h1>Catálogo de Cervezas</h1>
 <?php
-
-//abrimos bbdd
-     $conn = mysqli_connect("localhost","root","","usuarios");
-     // Check connection
-     if (mysqli_connect_errno()) {
-         echo "Failed to connect to MySQL: " . mysqli_connect_error();
-         exit();
-     }
      
      $sql = "SELECT * FROM productos";
      $datos = mysqli_query($conn, $sql);
@@ -48,7 +40,7 @@
      mysqli_close($conn);
 ?>
 <?php
-    include("footer.html");
+    include("./componentes/footer.html");
 ?>
 </body>
 </html>

@@ -15,7 +15,7 @@
   </head>
   <body>
     <?php
-    include("header.html");
+    include("./componentes/header.html");
     ?>
     <main>
         <fieldset>
@@ -79,7 +79,7 @@
         </fieldset>
     </main>
     <?php
-    include("footer.html");
+    include("./componentes/footer.html");
     ?>
   </body>
 </html>
