@@ -1,3 +1,6 @@
+<?php
+    include('./componentes/conexion.php');
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>

@@ -22,7 +22,7 @@
     <main>
         <div class="container">
             <div class="container-form">
-                <form action="login.php" method="POST"class="sign-in">
+                <form action="InicioRegistro.php" method="POST"class="sign-in">
                     <h2>Iniciar sesion</h2>
                     <span>Ingrese su correo y contraseña</span>
                     <div class="container-input">
@@ -38,7 +38,7 @@
                 </form>
             </div>
             <div class="container-form">
-                <form action="registro.php" method="POST" class="sign-up">
+                <form action="InicioRegistro.php" method="POST" class="sign-up">
                     <h2>Registrarse</h2>
                     <span>Use su email para el registro</span>
                     <div class="container-input">
@@ -75,9 +75,9 @@
 
             include('./componentes/conexion.php');
 
-            $email = $_POST["email"];
-            $pass 	= $_POST["password"];
-            $edad 	= $_POST["edad"];
+            $email = isset($_POST["email"]) ? $_POST["email"] : '';
+            $pass = isset($_POST["password"]) ? $_POST["password"] : '';
+            $edad = isset($_POST["edad"]) ? $_POST["edad"] : '';
 
             //Para iniciar sesión
             if(isset($_POST["btn-inicio"]))
@@ -89,11 +89,9 @@
                 
             if (($nr == 1) && (password_verify($pass,$mostrar['password'])) )
                 { 
-                    session_id();
-                    session_start();
                     $_SESSION['email']=$email;
                     $_SESSION['perfil']=$mostrar['perfil'];
-                    header("Location: index.php");
+                    echo "<script> alert('¡Bienvenido!');window.location= 'index.php' </script>";
                 }
             else
                 {
