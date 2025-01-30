@@ -33,27 +33,6 @@ a {
   color: #68492c;
 }
 
-/* NAV ADMIN */
-nav {
-  background-color: #68492c;
-  display: flex;
-}
-
-nav ul {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  list-style: none;
-  width: 100%;
-}
-nav li {
-  padding: 1em;
-}
-nav ul a {
-  text-decoration: none;
-  color: bisque;
-}
-
 /* BUSCADOR */
 main {
   display: flex;
@@ -76,15 +55,15 @@ main {
   height: 10px;
 }
 
-fieldset,
-legend {
-  background-color: #68492c;
-  border: 1px solid bisque;
+fieldset {
   border-radius: 20px;
   margin: 30px;
-  width: 50%;
+  width: 80%;
   font-size: 2em;
-  color: antiquewhite;
+  color: black;
+}
+legend {
+  font-size: 2em;
 }
 fieldset form {
   font-size: 1.5rem;

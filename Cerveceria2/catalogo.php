@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gustosa: Catálogo</title>
+    <title>Catálogo</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -20,7 +20,7 @@
 <?php
     include("./componentes/header.html");
     if($_SESSION['perfil']==='admin'){
-        include("./componentes/adminHeader.php");
+        include("adminHeader.php");
     }
 ?>
 <h1>Catálogo de Cervezas</h1>
