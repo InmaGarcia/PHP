@@ -33,6 +33,28 @@ a {
   color: #68492c;
 }
 
+/* NAV ADMIN */
+nav{
+  background-color: #68492c;
+  display: flex;
+      
+}
+    
+nav ul{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+}
+nav li{
+    padding:1em;
+}
+nav ul a{
+  text-decoration: none;
+  color:bisque;
+}
+
 /* BUSCADOR */
 main {
   display: flex;
@@ -41,8 +63,10 @@ main {
   align-items: center;
 }
 .formulario {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  gap:0.5em;
+
 }
 
 .tipos {
@@ -93,3 +117,50 @@ fieldset form {
 .contenedor legend {
   font-size: 1.5em;
 }
+
+/* FOOTER */
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-content {
+    margin-bottom: 10px;
+  }
+  .footer-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .footer-text {
+    color: #bbb;
+  }
+  .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+  }
+  .footer-nav a {
+    color: white;
+    text-decoration: none;
+  }
+  .footer-nav a:hover {
+    color: #ffcc00;
+  }
+  .footer-rights {
+    margin-top: 10px;
+    font-size: 0.875rem;
+    color: #bbb;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      flex-direction: row;
+      text-align: left;
+    }
+  }
+

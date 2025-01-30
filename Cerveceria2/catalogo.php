@@ -1,6 +1,5 @@
 <?php
     include('./componentes/conexion.php');
-    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,7 +20,7 @@
 <?php
     include("./componentes/header.html");
     if($_SESSION['perfil']==='admin'){
-        include("./componentes/admin.php");
+        include("./componentes/adminHeader.php");
     }
 ?>
 <h1>Catálogo de Cervezas</h1>
