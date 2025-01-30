@@ -3,7 +3,7 @@
 
         session_start();
 
-     $conn = mysqli_connect('localhost:3306','root','','cerveceria');
+     $conn = mysqli_connect('localhost:3308','root','','cerveceria');
      
      // Check connection
      if (mysqli_connect_errno()) {
