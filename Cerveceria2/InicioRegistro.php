@@ -119,7 +119,7 @@
             }
             else 
             {
-                echo "Error: " .$queryregistrar."<br>".mysql_error($conn);
+                echo "Error: " .$queryregistrar."<br>".mysqli_error($conn);
             }
 
             }else

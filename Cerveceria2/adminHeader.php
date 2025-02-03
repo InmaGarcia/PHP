@@ -29,6 +29,10 @@
             gap: 0.2em;
             justify-content: center;
         }
+        .cerveza{
+            padding-left: 50px;
+            font-size: 1.5em;
+        }
     </style>
 </head>
 
@@ -43,46 +47,40 @@
     </nav>
 
     <?php
-
+//cojemos la accion del admin
 $accion = $_GET['accion'] ?? '';
 error_reporting(0);
 
+//si la accion es insertar
 if ($accion === "insertar") {
     $error1 = $error2 = $error3 = $error4 = $error5 = $error6 = "";
 
     if (isset($_POST["btnS"])) {
-        $errores = [];
-        $_SESSION['cerveza'] = $_POST; // Guardamos los datos en sesión para usarlos en insertar.php
+      
 
         // Validaciones
         if (empty($_POST['denominacion'])) {
             $error1 = "<p style='color:red;'>¡Se requiere el nombre de la cerveza!</p>";
-            $errores[] = $error1;
         }
 
         if (!isset($_POST['tipo'])) {
             $error2 = "<p style='color:red;'>¡Has de elegir un tipo de cerveza!</p>";
-            $errores[] = $error2;
         }
 
         if (!isset($_POST['alergias'])) {
             $error3 = "<p style='color:red;'>¡Has de elegir al menos un alérgeno!</p>";
-            $errores[] = $error3;
         }
 
         if (empty($_POST['caducidad'])) {
             $error4 = "<p style='color:red;'>¡Debe tener una fecha de consumo máxima!</p>";
-            $errores[] = $error4;
         }
 
         if (!is_numeric($_POST['precio']) || $_POST['precio'] <= 0) {
             $error5 = "<p style='color:red;'>¡El precio debe ser un valor numérico válido!</p>";
-            $errores[] = $error5;
         }
 
         if ($_FILES['imagen']['error'] == 4) {
             $error6 = "<p style='color:red;'>¡Debe subir una imagen!</p>";
-            $errores[] = $error6;
         } else {
             $extensiones_permitidas = ['jpg', 'jpeg', 'png', 'gif'];
             $nombre_archivo = $_FILES['imagen']['name'];
@@ -90,15 +88,89 @@ if ($accion === "insertar") {
 
             if (!in_array(strtolower($extension), $extensiones_permitidas)) {
                 $error6 .= "<p style='color:red;'>¡Solo se permiten imágenes JPG, JPEG, PNG o GIF!</p>";
-                $errores[] = $error6;
             }
         }
 
         // Si no hay errores, redirigir a insertar.php con los datos
         if (empty($errores)) {
             move_uploaded_file($_FILES["imagen"]["tmp_name"], "uploads/" . $_FILES["imagen"]["name"]);
-            $_SESSION['imagen'] = "uploads/" . $_FILES["imagen"]["name"];
-            header("Location: /Servidor/Cerveceria2/funciones/insertar.php");
+            $ruta_img = "uploads/" . $_FILES["imagen"]["name"];
+            // echo "<script>window.location.replace('./funciones/insertar.php');</script>";
+            echo "<style> fieldset{display:none;}</style>";
+                        
+            echo "<div class='cerveza'><h2>Estos son los datos introducidos:</h2><ul>";
+                    
+            print ("<li>Denominación del alimento: {$_POST['denominacion']}</li>");
+            print ("<li>Marca del producto:{$_POST['marca']}</li>");
+            print ("<li>Tipo de cerveza: {$_POST['tipo']}</li>");
+            print ("<li>Formato: {$_POST['formato']}</li>");
+            print ("<li>Tamaño: {$_POST['cantidad']}</li>");
+            print ("<li>Alergenos: ".implode(" - ",$_POST['alergias'])."</li>");
+            print ("<li>Fecha consumo: {$_POST['caducidad']}</li>");
+            print ("<li>Precio: {$_POST['precio']}</li>");
+            print ("<li>Foto: {$_FILES['imagen']['name']}</li>");
+            print ("<li>Observaciones: {$_POST['Obs']}</li><ul></div>");           
+            
+            $imagen=$_FILES['imagen'];
+
+            //subimos la imagen al temporal del servidor
+            function subir_fichero($directorio_destino, $imagen){
+                if (!isset($imagen)) {
+                    echo "<p style='color:red;'>ERROR: No se recibió ninguna imagen.</p>";
+                    return false;
+                }
+                if ($imagen['error'] !== 0) {
+                    echo "<p style='color:red;'>ERROR en el archivo: Código de error " . $imagen['error'] . "</p>";
+                    return false;
+                }
+            
+                $tmp_name = $imagen['tmp_name'];
+                $img_file = $imagen['name'];
+                $img_type = $imagen['type'];
+            
+                // Validar tipo de archivo
+                $formatos_permitidos = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png'];
+                if (!in_array($img_type, $formatos_permitidos)) {
+                    echo "<p style='color:red;'>ERROR: Formato de archivo no permitido ($img_type).</p>";
+                    return false;
+                }
+            
+            
+                // Intentar mover el archivo
+                $ruta_destino = $directorio_destino . '/' . $img_file;
+                if (move_uploaded_file($tmp_name, $ruta_destino)) {
+                    echo "<p style='color:green;'>✅ Imagen guardada en: $ruta_destino</p>";
+                    return true;
+                } else {
+                    echo "<p style='color:red;'>❌ ERROR: No se pudo mover el archivo.</p>";
+                    return false;
+                }
+                }
+
+                    $directorio_destino = "C:/xampp/htdocs/Servidor/Cerveceria2/uploads";
+                    $subido= subir_fichero($directorio_destino,$_FILES['imagen']);
+            
+                    // Guardar valores para la base de datos
+                    $denominacion = mysqli_real_escape_string($conn, $_POST['denominacion']);
+                    $tipo = mysqli_real_escape_string($conn, $_POST['tipo']);
+                    $cantidad = mysqli_real_escape_string($conn, $_POST['cantidad']);
+                    $marca = mysqli_real_escape_string($conn, $_POST['marca']);
+                    $fecha = mysqli_real_escape_string($conn, $_POST['caducidad']);
+                    $alergias = mysqli_real_escape_string($conn, implode(",", $_POST['alergias']));
+                    $observaciones = mysqli_real_escape_string($conn, $_POST['Obs']);
+
+                    // Insertar en la base de datos
+                    $sql = "INSERT INTO productos (denominacion, tipo, cantidad, marca, fecha, alergias, foto, observaciones)
+                            VALUES ('$denominacion', '$tipo', '$cantidad', '$marca', '$fecha', '$alergias', '$ruta_img', '$observaciones', '$formato')";
+                if (mysqli_query($conn, $sql)) {
+                    echo "<script>alert('Cerveza subida')</script>;";
+                    exit();
+                } else {
+                        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                }
+              ?> 
+            <!--  <button onclick="document.location.reload()">Insertar otra Cerveza</button> este boton no me funciona-->
+            <?php
             exit();
         }
     }
@@ -141,12 +213,12 @@ if ($accion === "insertar") {
             </select>
 
             <label>Tamaño:</label>
+            <!-- en la base de datos cantidad es integer, por eso lo cambio el valor a número -->
             <select name="cantidad">
-                <option value="botellin">Botellín</option>
-                <option value="tercio">Tercio</option>
-                <option value="media">Media</option>
-                <option value="litrona">Litrona</option>
-                <option value="pack">Pack</option>
+                <option value="20">Botellín</option>
+                <option value="33">Tercio</option>
+                <option value="50">Media</option>
+                <option value="100">Litrona</option>
             </select>
 
 
@@ -183,12 +255,12 @@ if ($accion === "insertar") {
 
 <?php
 } elseif ($accion === "modificar") {
-    $conn = mysqli_connect("localhost", "usuario", "contraseña", "base_de_datos");
+   
     $sql = "SELECT * FROM productos";
     $datos = mysqli_query($conn, $sql);
     // Código para modificar cervezas...
 } elseif ($accion === "borrar") {
-    $conn = mysqli_connect("localhost", "usuario", "contraseña", "base_de_datos");
+   
     $sql = "SELECT * FROM productos";
     $datos = mysqli_query($conn, $sql);
     // Código para borrar cervezas...

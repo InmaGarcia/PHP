@@ -10,26 +10,19 @@
 </head>
 <body>
     <?php
-
-    if (!isset($_SESSION['cerveza']) || empty($_SESSION['cerveza'])) {
-        echo "<script>alert('No se pasaron los datos de la cerveza correctamente');</script>";
-        exit();
-    }
-    $cerveza = $_SESSION['cerveza'];
-   $imagen = $_SESSION['imagen'] ?? '';
    
-   echo "<h2>Datos de la cerveza a insertar:</h2>";
+   echo "<div class='nueva'><h2>Datos de la cerveza insertada:</h2>";
           
-          print ("<p>Denominación del alimento: {$cerveza['denominacion']}</p>");
-          print ("<p>Marca del producto:{$cerveza['marca']}</p>");
-          print ("<p>Tipo de cerveza: {$cerveza['tipo']}</p>");
-          print ("<p>Formato: {$cerveza['formato']}</p>");
-          print ("<p>Tamaño: {$cerveza['cantidad']}</p>");
-          print ("<p>Alergenos: ".implode(" - ",$cerveza['alergias'])."</p>");
-          print ("<p>Fecha consumo: {$cerveza['caducidad']}</p>");
-          print ("<p>Precio: {$cerveza['precio']}</p>");
-          print ("<p>Foto: {$imagen['nombre']}</p>");
-          print ("<p>Observaciones: {$cerveza['observaciones']}</p>");
+          print ("<p>Denominación del alimento: {$_POST['denominacion']}</p>");
+          print ("<p>Marca del producto:{$_POST['marca']}</p>");
+          print ("<p>Tipo de cerveza: {$_POST['tipo']}</p>");
+          print ("<p>Formato: {$_POST['formato']}</p>");
+          print ("<p>Tamaño: {$_POST['cantidad']}</p>");
+          print ("<p>Alergenos: ".implode(" - ",$_POST['alergias'])."</p>");
+          print ("<p>Fecha consumo: {$_POST['caducidad']}</p>");
+          print ("<p>Precio: {$_POST['precio']}</p>");
+          print ("<p>Foto: {$_POST['imagen']['name']}</p>");
+          print ("<p>Observaciones: {$_POST['observaciones']}</p></div>");
    
         
         //subimos la imagen al temporal del servidor
@@ -50,7 +43,7 @@
                     }
                 }
             }
-            //Si llegamos hasta aquí es que algo ha fallado
+            //Si llegamos aquí es que algo ha fallado
             return false;
         }
 
@@ -61,7 +54,7 @@
         }else{
             $ruta_img = $directorio_destino."/".$imagen['name'];
                 $sql = "INSERT INTO productos (denominacion,tipo,cantidad,marca,fecha,alergias,foto,observaciones)
-                        VALUES ($cerveza[denominacion],$cerveza[tipo],$cerveza[cantidad],$cerveza[marca],$cerveza[fecha],$cerveza[alergias],'$ruta_img',$cerveza[observaciones])";
+                        VALUES ($_POST[denominacion],$_POST[tipo],$_POST[cantidad],$_POST[marca],$_POST[fecha],$_POST[alergias],'$ruta_img',$_POST[observaciones])";
                 if (mysqli_query($conn, $sql)) {
                       echo "alert('Cerveza subida');";
                       exit();
@@ -69,10 +62,8 @@
                       echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
         }
-        $_SESSION['cerveza']="";
-        $_SESSION['imagen']="";
    ?>
-   <button onclick="history.back()">Volver</button>
+   <button onclick="history.back()">Insertar otra Cerveza</button>
     
 </body>
 </html>

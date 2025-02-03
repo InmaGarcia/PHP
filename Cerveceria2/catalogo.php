@@ -19,34 +19,46 @@
 <body>
 <?php
     include("./componentes/header.html");
+    error_reporting(0);
     if($_SESSION['perfil']==='admin'){
         include("adminHeader.php");
-    }
+    }else{
 ?>
+<main>
 <h1>Catálogo de Cervezas</h1>
 <?php
      
      $sql = "SELECT * FROM productos";
-     $datos = mysqli_query($conn, $sql);
+     $arrayDatos  = mysqli_query($conn, $sql);
      // Verificar si hay resultados
+     $galeria = "<div class='galeria'>";
      if ($datos) {
-        $div = "<div>";
+        $producto="<div class='card'>";
         
         // Procesar los resultados
-        while ($arrayDatos = mysqli_fetch_assoc($datos)) {
-            $div .= "<p>" . htmlspecialchars($arrayDatos['Usuario']) . "</p>";
+        while ($datos = mysqli_fetch_assoc($arrayDatos )) {
+            var_dump($datos );
+            $producto .= "<img src='".htmlspecialchars($datos['foto'])."'/>";
+            $producto .= "<h3>".htmlspecialchars($datos['marca'])." - ".htmlspecialchars($datos['tipo'])."</h3>";
+            $producto .= "<p>".htmlspecialchars($datos['denominacion'])."</p>";
+            $producto .= "<p>Formato: ".htmlspecialchars($datos['formato'])."</p>";
+            $producto .= "<p>Tamaño: ".htmlspecialchars($datos['denominacion'])."</p>";
         }
         
-        $div .= "</div>";
+        $producto.="</div>";
+        $galeria .= $producto;
         echo $lista;
-        print ("<P> <A HREF='javascript:history.back()'>Volver</A> </P>\n");
     } else {
         echo "No se encontraron cervezas.";
     }
+    $galeria .= "</div>";
      mysqli_close($conn);
 ?>
+</main>
 <?php
+    }
     include("./componentes/footer.html");
+
 ?>
 </body>
 </html>

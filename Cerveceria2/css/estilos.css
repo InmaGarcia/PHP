@@ -78,22 +78,6 @@ fieldset form {
 
 /* CATALOGO */
 
-/* LOGIN */
-.registro {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  align-items: baseline;
-}
-.contenedor {
-  width: 25%;
-  display: flex;
-  justify-content: center;
-}
-
-.contenedor legend {
-  font-size: 1.5em;
-}
 
 /* FOOTER */
 
